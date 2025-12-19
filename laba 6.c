@@ -1,32 +1,46 @@
-#include <stdio.h>
+ #include <stdio.h>
+#define N 3
 int main() {
-    int N;
-    printf("Введите N (1 <= N <= 3): ");
-    scanf("%d", &N);
-
-    int matrix[3][3];
-    for (int i = 0; i < N; i++) {
-        for (int j = 0; j < N; j++) {
-            matrix[i][j] = i + j + 1;
-        }
-    }
+    double matrix[N][N] = {
+        {3, 2, 1},
+        {6, 5, 4},
+        {9, 8, 7}};
+    double b[N] = {1, -2, 3};
+    printf("Система:\n");
     for(int i = 0; i < N; i++) {
         for(int j = 0; j < N; j++) {
-            printf("%d", matrix[i][j]);
+            printf("%.0fx%d", matrix[i][j], j+1);
+            if(j < N - 1)
+                printf(" + ");
         }
-        printf("\n");
+        printf(" = %.f\n", b[i]);
     }
-    int det = 0;
-    if (N==1) {
-        det = matrix[0][0];
+    double det;
+    double det1;
+    double det2;
+    double det3;
+    double x;
+    double y;
+    double z;
+    det = matrix[0][0]*matrix[1][1]*matrix[2][2] + matrix[0][1]*matrix[1][2]*matrix[2][0] + matrix[0][2]*matrix[1][0]*matrix[2][1] - matrix[0][2]*matrix[1][1]*matrix[2][0] - matrix[0][1]*matrix[1][0]*matrix[2][2] - matrix[0][0]*matrix[1][2]*matrix[2][1];
+        if(det == 0) {
+        printf("Определитель равен 0! Система не имеет единственного решения.\n");
+        return 1;
     }
-    else if (N==2) {
-        det = matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-    }
-    else if (N==3) {
-        det = matrix[0][0] * matrix[1][1] * matrix[2][2] + matrix [0][1] * matrix[1][2] * matrix[2][0] + matrix[1][0] * matrix[2][1] * matrix[0][2] - matrix[0][2] * matrix[1][1] * matrix[2][0] - matrix[0][1] * matrix[1][0] * matrix[2][2] - matrix[0][0] * matrix[1][2] * matrix[2][1];
-    
-    }
-    printf("Определитель матрицы: %d\n", det);
+    det1 = b[0]*matrix[1][1]*matrix[2][2] + matrix[0][1]*matrix[1][2]*b[2] + matrix[0][2]*b[1]*matrix[2][1] - matrix[0][2]*matrix[1][1]*b[2] - matrix[0][1]*b[1]*matrix[2][2] - b[0]*matrix[1][2]*matrix[2][1];
+    det2 = matrix[0][0]*b[1]*matrix[2][2] + b[0]*matrix[1][2]*matrix[2][0] + matrix[0][2]*matrix[1][0]*b[2] - matrix[0][2]*b[1]*matrix[2][0] - b[0]*matrix[1][0]*matrix[2][2] - matrix[0][0]*matrix[1][2]*b[2];
+    det3 = matrix[0][0]*matrix[1][1]*b[2] + matrix[0][1]*b[1]*matrix[2][0] + b[0]*matrix[1][0]*matrix[2][1] - b[0]*matrix[1][1]*matrix[2][0] - matrix[0][1]*matrix[1][0]*b[2] - matrix[0][0]*b[1]*matrix[2][1];
+    x = det1/det;
+    y = det2/det;
+    z = det3/det;
+    printf("\n");
+    printf("det: %.2f\n", det);
+    printf("det1: %.2f\n", det1);
+    printf("det2: %.2f\n", det2);
+    printf("det3: %.2f\n", det3);
+    printf("x = %.2f\n", x);
+    printf("y = %.2f\n", y);
+    printf("z = %.2f\n", z);
     return 0;
 }
+
